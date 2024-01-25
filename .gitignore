@@ -37,3 +37,4 @@ worker
 site/public
 *.http
 .local
+.wrangler
