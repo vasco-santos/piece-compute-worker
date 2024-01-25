@@ -2,12 +2,23 @@
   "name": "piece-compute-worker",
   "version": "0.0.0",
   "type": "module",
+  "main": "src/index.js",
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
-    "start": "wrangler dev"
+    "start": "wrangler dev",
+    "test": "ava --verbose test/*.spec.js",
+    "lint": "standard"
   },
   "devDependencies": {
+    "ava": "^3.15.0",
+    "miniflare": "^3.20231218.3",
+    "standard": "^17.1.0",
     "wrangler": "^3.0.0"
+  },
+  "standard": {
+    "ignore": [
+      "*.ts"
+    ]
   }
 }
