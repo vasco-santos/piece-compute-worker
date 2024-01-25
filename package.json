@@ -1,7 +1,7 @@
 {
   "name": "piece-compute-worker",
   "version": "0.0.0",
-  "private": true,
+  "type": "module",
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
