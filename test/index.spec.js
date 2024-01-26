@@ -8,6 +8,6 @@ test.before((t) => {
 })
 
 test('piece-compute', async (t) => {
-  const res = await t.context.mf.dispatchFetch('http://localhost:8787')
+  const res = await t.context.mf.dispatchFetch('http://localhost:8787/bagbaiera222226db4v4oli5fldqghzgbv5rqv3n4ykyfxk7shfr42bfnqwua')
   t.assert(res.ok)
 })

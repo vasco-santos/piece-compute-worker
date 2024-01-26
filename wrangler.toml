@@ -19,6 +19,7 @@ route = { pattern = "https://piece-compute-staging.web3.storage/*", zone_id = "7
 r2_buckets = [
   { binding = "CARPARK", bucket_name = "carpark-prod-0" }
 ]
+# TODO: staging bucket
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.
