@@ -1,5 +1,5 @@
 /* eslint-env serviceworker */
-import * as Hasher from 'fr32-sha2-256-trunc254-padded-binary-tree-multihash'
+import * as Hasher from 'fr32-sha2-256-trunc254-padded-binary-tree-multihash/wasm-import'
 
 import * as Digest from 'multiformats/hashes/digest'
 import { Piece } from '@web3-storage/data-segment'
@@ -17,12 +17,12 @@ export default {
    */
   async fetch (request, env, ctx) {
     const hasher = Hasher.create()
-    console.log('hasher', typeof hasher)
 
     // TODO: UCANTIFY
     const reqUrl = new URL(request.url)
     const pathname = reqUrl.pathname
 
+    // TODO: Parse CID and verify if CAR
     const cid = pathname.replace('/', '')
     console.log('cid', cid)
     const bucketObject = await env.CARPARK.get(`${cid}/${cid}.car`)
@@ -43,7 +43,6 @@ export default {
     const multihashDigest = Digest.decode(digest)
     // @ts-expect-error some properties from PieceDigest are not present in MultihashDigest
     const piece = Piece.fromDigest(multihashDigest)
-    console.log('p', piece.toString())
 
     return new Response(piece.toString())
   }

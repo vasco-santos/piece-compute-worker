@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@web3-storage/data-segment": "5.0.0",
-    "fr32-sha2-256-trunc254-padded-binary-tree-multihash": "^3.1.1",
+    "fr32-sha2-256-trunc254-padded-binary-tree-multihash": "^3.2.1",
     "multiformats": "^13.0.1"
   },
   "devDependencies": {
