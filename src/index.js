@@ -1,8 +1,12 @@
 /* eslint-env serviceworker */
 import * as Hasher from 'fr32-sha2-256-trunc254-padded-binary-tree-multihash/wasm-import'
 
+import { CID } from 'multiformats/cid'
 import * as Digest from 'multiformats/hashes/digest'
 import { Piece } from '@web3-storage/data-segment'
+
+/** https://github.com/multiformats/multicodec/blob/master/table.csv#L140 */
+const CAR_CODE = 0x02_02
 
 /**
  * @typedef {import('./bindings.js').Environment} Environment
@@ -19,14 +23,26 @@ export default {
     const hasher = Hasher.create()
 
     // TODO: UCANTIFY
-    const reqUrl = new URL(request.url)
-    const pathname = reqUrl.pathname
 
-    // TODO: Parse CID and verify if CAR
-    const cid = pathname.replace('/', '')
-    console.log('cid', cid)
+    let cid
+    try {
+      const reqUrl = new URL(request.url)
+      const pathname = reqUrl.pathname
+      const cidString = pathname.replace('/', '')
+      cid = CID.parse(cidString || '')
+    } catch (/** @type {any} */error) {
+      return new Response(error.message, {
+        status: 400
+      })
+    }
+
+    if (cid.code !== CAR_CODE) {
+      return new Response('cid received is not from a CAR file', {
+        status: 400
+      })
+    }
+
     const bucketObject = await env.CARPARK.get(`${cid}/${cid}.car`)
-
     if (!bucketObject?.body) throw new Error('missing body')
     for await (const chunk of bucketObject?.body) {
       hasher.write(chunk)
@@ -44,6 +60,6 @@ export default {
     // @ts-expect-error some properties from PieceDigest are not present in MultihashDigest
     const piece = Piece.fromDigest(multihashDigest)
 
-    return new Response(piece.toString())
+    return new Response(piece.link.toString())
   }
 }
