@@ -7,12 +7,27 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "start": "wrangler dev",
+    "build": "node scripts/build.js",
+    "build:debug": "node scripts/build.js",
+    "pretest": "npm run build:debug",
     "test": "ava --verbose test/*.spec.js",
     "lint": "standard"
   },
+  "dependencies": {
+    "@web3-storage/data-segment": "5.0.0",
+    "fr32-sha2-256-trunc254-padded-binary-tree-multihash": "^3.2.1",
+    "multiformats": "^13.0.1"
+  },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "@ipld/car": "5.2.6",
+    "@ucanto/transport": "9.0.2",
+    "@web-std/blob": "3.0.5",
     "ava": "^3.15.0",
+    "esbuild": "^0.20.0",
+    "esbuild-plugin-wasm": "^1.1.0",
     "miniflare": "^3.20231218.3",
+    "one-webcrypto": "^1.0.3",
     "standard": "^17.1.0",
     "wrangler": "^3.0.0"
   },
